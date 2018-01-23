@@ -1,4 +1,4 @@
-// #include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 // SoftwareSerial mySerial(10, 11); // RX TX
 
 #ifndef bitRead
@@ -21,7 +21,7 @@ int o_koffie, o_ristretto, o_cappuccino, o_espresso, o_latte_macchiato, o_macchi
 
 void setup() {
   Serial.begin(9600);
-  Serial1.begin(9600);
+  //Serial1.begin(9600);
   Serial.println("Starting Q42 coffeehacker");
 }
 
@@ -44,11 +44,11 @@ int getCounter(int offset)
 
   String r = "";
 
-  while(Serial1.available()) {
-    delay (intra); d0 = Serial1.read();
-    delay (intra); d1 = Serial1.read();
-    delay (intra); d2 = Serial1.read();
-    delay (intra); d3 = Serial1.read();
+  while(Serial.available()) {
+    delay (intra); d0 = Serial.read();
+    delay (intra); d1 = Serial.read();
+    delay (intra); d2 = Serial.read();
+    delay (intra); d3 = Serial.read();
     delay (inter);
     r += char(fromCoffeemaker(d0,d1,d2,d3));
   }
@@ -70,7 +70,7 @@ void loop() {
   o_latte_macchiato = t_latte_macchiato;
   o_macchiato = t_macchiato;
 
-  Serial.println("------ reading values");
+  //Serial.println("------ reading values");
   t_koffie = getCounter(0x282);
   t_ristretto = getCounter(0x281);
   t_cappuccino = getCounter(0x284);
@@ -78,12 +78,12 @@ void loop() {
   t_latte_macchiato = getCounter(0x285);
   t_macchiato = getCounter(0x286);
 
-  Serial.print("koffie:.........."); Serial.println(t_koffie);
+  /*Serial.print("koffie:.........."); Serial.println(t_koffie);
   Serial.print("cappuccino:......"); Serial.println(t_cappuccino);
   Serial.print("espresso:........"); Serial.println(t_espresso);
   Serial.print("ristretto:......."); Serial.println(t_ristretto);
   Serial.print("latte macchiato:."); Serial.println(t_latte_macchiato);
-  Serial.print("macchiato:......."); Serial.println(t_macchiato);
+  Serial.print("macchiato:......."); Serial.println(t_macchiato);*/
 
   if(t_koffie == o_koffie + 1) trigger("koffie");
   if(t_ristretto == o_ristretto + 1) trigger("ristretto");
@@ -97,8 +97,8 @@ void loop() {
 
 void trigger(String ctype)
 {
-  Serial.println(" -- triggering webhook for a " + ctype);
-  Spark.publish("store-coffee", ctype, 60, PRIVATE);
+  //Serial.println(" -- triggering webhook for a " + ctype);
+  //Spark.publish("store-coffee", ctype, 60, PRIVATE);
 }
 
 byte fromCoffeemaker(byte x0, byte x1, byte x2, byte x3) {
@@ -128,9 +128,9 @@ byte toCoffeemaker(byte z) {
   bitWrite(z3, 2, bitRead(z,6));
   bitWrite(z3, 5, bitRead(z,7));
 
-  delay(intra); Serial1.write(z0);
-  delay(intra); Serial1.write(z1);
-  delay(intra); Serial1.write(z2);
-  delay(intra); Serial1.write(z3);
+  delay(intra); Serial.write(z0);
+  delay(intra); Serial.write(z1);
+  delay(intra); Serial.write(z2);
+  delay(intra); Serial.write(z3);
   delay(inter);
 }

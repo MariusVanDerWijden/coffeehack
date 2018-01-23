@@ -70,7 +70,7 @@ def sendcommand(cmd):
     for c in cmd:
         bytes = tojura(c)
         for b in bytes:
-            serialport.write(b.tobytes)
+            serialport.write(b.tobytes())
             time.sleep(8 / 1000) # 8ms break between bytegroups
     return
 
@@ -78,8 +78,9 @@ def sendcommand(cmd):
 def receiveresponse():
     response = bytearray()
     bytes = bytearray(4)
-    while serial.inWaiting() > 0:
-        readinto(bytes)
+    while serialport.in_waiting > 0:
+        print 'read bytes'
+        serialport.readinto(bytes)
         response.append(fromjura(bytes))
     return response
 
@@ -104,15 +105,18 @@ print "-  Q42 JURA HACKING  -"
 print "----------------------"
 
 try:
-    serialport = serial.Serial('/dev/ttyAMA0', 9600) #9600 8 N 1
+    serialport = serial.Serial('/dev/ttyUSB0', 9600) #9600 8 N 1
+    serialport.close()
     serialport.open()
 except Exception as e:
-    print "Cannot open serial port ('" + e.strerror + "'). This script requires a raspberry pi serial port connected to a Jura coffee machine."
+    print e
+    print "Cannot open serial port ('" + str(e.strerror) + "'). This script requires a raspberry pi serial port connected to a Jura coffee machine."
     sys.exit()
 
-sendcommand(cmd_read_machine_type)
+sendcommand(CMD_GET_MACHINE_TYPE)
 r = receiveresponse()
 
+print r
 print r
 
 # green:  GND, RPI 06 -- orange - rechtsboven 1 (RS)
