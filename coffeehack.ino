@@ -63,6 +63,12 @@ int getCounter(int offset)
 }
 
 void loop() {
+  displayValuesToScreen();
+  delay(1000);
+}
+
+void displayValuesToScreen()
+{
   o_koffie = t_koffie;
   o_ristretto = t_ristretto;
   o_cappuccino = t_cappuccino;
@@ -91,13 +97,11 @@ void loop() {
   if(t_espresso == o_espresso + 1) trigger("espresso");
   if(t_latte_macchiato == o_latte_macchiato + 1) trigger("latte_macchiato");
   if(t_macchiato == o_macchiato + 1) trigger("macchiato");
-
-  delay(5 * 1000);
 }
 
 void trigger(String ctype)
 {
-  //Serial.println(" -- triggering webhook for a " + ctype);
+  Serial.println(" -- triggering webhook for a " + ctype);
   //Spark.publish("store-coffee", ctype, 60, PRIVATE);
 }
 
