@@ -9,6 +9,8 @@ import struct
 import binascii
 from bitarray import bitarray
 
+SERIAL_PORT = '/dev/ttyUSB0'
+
 # Given an ascii character c, returns an array (size 4) of bitarray in Jura encoding
 #
 # 4 UART bytes are one real byte:
@@ -105,7 +107,7 @@ print "-  Q42 JURA HACKING  -"
 print "----------------------"
 
 try:
-    serialport = serial.Serial('/dev/ttyUSB0', 9600) #9600 8 N 1
+    serialport = serial.Serial(SERIAL_PORT, 9600) #9600 8 N 1
     serialport.close()
     serialport.open()
 except Exception as e:
