@@ -71,6 +71,7 @@ def test_encoder():
 
 # encodes and writes a command without CRLF to the coffee machine
 def send_command(cmd):
+    print 'send_command' + cmd
     cmd += "\r\n"
     for c in cmd:
         bytes = to_jura(c)
@@ -82,6 +83,7 @@ def send_command(cmd):
 
 # receives a response of any size into a bytearray
 def receive_response():
+    print 'receive response'
     response = bytearray()
     bytes = bytearray(4)
     while serialport.in_waiting > 0:
@@ -156,8 +158,8 @@ except Exception as e:
 
 send_command(CMD_GET_MACHINE_TYPE)
 r = receive_response()
-
 print r
+the_big_test()
 print r
 
 # green:  GND, RPI 06 -- orange - rechtsboven 1 (RS)
