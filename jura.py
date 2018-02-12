@@ -9,7 +9,7 @@ import struct
 import binascii
 from bitarray import bitarray
 
-SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_PORT = '/dev/ttyAMA0'
 
 # Given an ascii character c, returns an array (size 4) of bitarray in Jura encoding
 #
