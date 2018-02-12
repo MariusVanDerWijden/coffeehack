@@ -78,6 +78,7 @@ def send_command(cmd):
         for b in bytes:
             serialport.write(b.tobytes())
             time.sleep(8 / 1000) # 8ms break between bytegroups
+    print 'send done'
     return
 
 
