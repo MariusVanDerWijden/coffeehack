@@ -77,9 +77,7 @@ def send_command(cmd):
     for c in cmd:
         bytes = to_jura(c)
         for b in bytes:
-            #serialport.write(b.tobytes())
-            print serialport.is_open
-            serialport.write("adsf\n")
+            serialport.write(b.tobytes())
             #time.sleep(8 / 1000) # 8ms break between bytegroups
     return
 
