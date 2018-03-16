@@ -119,6 +119,7 @@ def the_big_test():
     print receive_response()
     for index in  range(0,len(products)):
         order_product(index)
+        time.sleep(1)
     stop_machine()
 
 
@@ -137,7 +138,7 @@ CMD_SEND_PRODUCT = b'?P' #third char is product name
 productsS95 = "EFABJIG";
 #if defined(X7)
 productsX7 = "ABCHDEKJFG";
-productsTest = "ABCDEFGHIJKLMNOPQRSTUVWKYZ"
+productsTest = "ABCDEFGHIJ"
 products = productsTest
 
 # commands that need arguments
