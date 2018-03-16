@@ -77,7 +77,8 @@ def send_command(cmd):
         bytes = to_jura(c)
         print 'tick'
         for b in bytes:
-            serialport.write(b.tobytes())
+            #serialport.write(b.tobytes())
+            serialport.write("adsf")
             time.sleep(8 / 1000) # 8ms break between bytegroups
         print 'tock'
     print 'send done'
