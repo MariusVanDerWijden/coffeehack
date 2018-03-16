@@ -89,7 +89,7 @@ def receive_response():
     bytes = bytearray(4)
     while serialport.in_waiting > 0:
         serialport.readinto(bytes)
-        print "{0:b}".format(bytes)
+        print hex(bytes)
     #response.append(from_jura(bytes))
     return response
 
