@@ -151,7 +151,11 @@ print "-  Q42 JURA HACKING  -"
 print "----------------------"
 test_encoder()
 try:
-    serialport = serial.Serial(SERIAL_PORT, 9600) #9600 8 N 1
+    serialport = serial.Serial(port=SERIAL_PORT, baudrate = 9600,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                bytesize=serial.EIGHTBITS,
+                timeout=1) #9600 8 N 1
     serialport.close()
     serialport.open()
 except Exception as e:
