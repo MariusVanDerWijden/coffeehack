@@ -90,7 +90,7 @@ def receive_response():
     while serialport.in_waiting > 0:
         print 'read bytes'
         serialport.readinto(bytes)
-        response.append(from_jura(bytes))
+    response.append(from_jura(bytes))
     return response
 
 
