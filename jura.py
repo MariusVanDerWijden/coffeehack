@@ -117,7 +117,7 @@ def the_big_test():
     start_machine()
     send_command(CMD_GET_MACHINE_TYPE)
     print receive_response()
-    for index in len(products):
+    for index in  range(0,len(products)):
         order_product(index)
     stop_machine()
 
