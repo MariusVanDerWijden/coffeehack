@@ -105,7 +105,7 @@ def stop_machine():
 
 
 def order_product(index):
-    if(index < len(products)):
+    if(index > len(products)):
         print "product not available"
     else:
         print "ordering product " + products[index]
