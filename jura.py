@@ -78,8 +78,9 @@ def send_command(cmd):
         print 'tick'
         for b in bytes:
             #serialport.write(b.tobytes())
+            print serialport.is_open
             serialport.write("adsf")
-            time.sleep(8 / 1000) # 8ms break between bytegroups
+            #time.sleep(8 / 1000) # 8ms break between bytegroups
         print 'tock'
     print 'send done'
     return
