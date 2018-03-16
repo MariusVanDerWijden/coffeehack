@@ -9,7 +9,7 @@ import struct
 import binascii
 from bitarray import bitarray
 
-SERIAL_PORT = '/dev/ttyAMA0'
+SERIAL_PORT = '/dev/serial0'
 
 # Given an ascii character c, returns an array (size 4) of bitarray in Jura encoding
 #
@@ -80,7 +80,7 @@ def send_command(cmd):
         for b in bytes:
             #serialport.write(b.tobytes())
             print serialport.is_open
-            serialport.write("adsf")
+            serialport.write("adsf\n")
             #time.sleep(8 / 1000) # 8ms break between bytegroups
         print 'tock'
     print 'send done'
