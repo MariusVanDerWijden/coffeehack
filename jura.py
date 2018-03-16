@@ -116,6 +116,7 @@ def order_product(index):
 def the_big_test():
     #start_machine()
     send_command(CMD_GET_MACHINE_TYPE)
+    send_command(CMD_SMALL_CUP)
     print receive_response()
     for index in  range(0,len(products)):
         order_product(index)
@@ -133,6 +134,7 @@ CMD_READ_INPUTS = b'IC:'
 CMD_GET_MACHINE_TYPE = b'TY:'
 CMD_READ_RAM = b'RR:'
 CMD_SEND_PRODUCT = b'?P' #third char is product name
+CMD_SMALL_CUP = b'FA:04'
 
 #if defined(S95)
 productsS95 = "EFABJIG";
