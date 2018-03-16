@@ -46,7 +46,7 @@ def to_jura(c):
 def from_jura(bytes):
     if len(bytes) != 4: raise ValueError('Needs an array of size 4')
     c = bitarray(8)
-
+    print bytes
     c[0] = bytes[0][2]
     c[1] = bytes[0][5]
     c[2] = bytes[1][2]
