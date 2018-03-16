@@ -109,7 +109,7 @@ def order_product(index):
         print "product not available"
     else:
         print "ordering product " + products[index]
-        send_command(CMD_SEND_PRODUCT + products[index])
+        #send_command(CMD_SEND_PRODUCT + products[index])
         print receive_response()
 
 
@@ -119,8 +119,8 @@ def the_big_test():
     send_command(CMD_SMALL_CUP)
     print receive_response()
     for index in  range(0,len(products)):
-        order_product(index)
-        time.sleep(10)
+        #order_product(index)
+        #time.sleep(10)
     stop_machine()
 
 
@@ -133,8 +133,8 @@ CMD_READ_MACHINE_TYPE = b'RE:31'
 CMD_READ_INPUTS = b'IC:'
 CMD_GET_MACHINE_TYPE = b'TY:'
 CMD_READ_RAM = b'RR:'
-CMD_SEND_PRODUCT = b'?P' #third char is product name
-CMD_SMALL_CUP = b'FA:04'
+CMD_GET_PRODUCT = b'?P' #third char is product name 
+CMD_SMALL_CUP = b'FA:04\r\n'
 
 #if defined(S95)
 productsS95 = "EFABJIG";
