@@ -139,8 +139,8 @@ CMD_READ_INPUTS = b'IC:'
 CMD_GET_MACHINE_TYPE = b'TY:'
 CMD_READ_RAM = b'RR:'
 CMD_GET_PRODUCT = b'?P' #third char is product name 
-CMD_SEND_PRODUCT_1 = b'FA:01\r\n'
-CMD_SMALL_CUP = b'FA:01\r\n'
+CMD_SEND_PRODUCT_1 = b'FA:01'
+CMD_SMALL_CUP = b'FA:02'
 
 #if defined(S95)
 productsS95 = "EFABJIG";
