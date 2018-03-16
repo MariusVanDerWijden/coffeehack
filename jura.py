@@ -75,7 +75,8 @@ def send_command(cmd):
     cmd += "\r\n"
     for c in cmd:
         bytes = to_jura(c)
-        print 'tick' + bytes
+        print bytes
+        print 'tick'
         for b in bytes:
             #serialport.write(b.tobytes())
             print serialport.is_open
