@@ -78,7 +78,7 @@ def send_command(cmd):
         bytes = to_jura(c)
         for b in bytes:
             serialport.write(b.tobytes())
-            #time.sleep(8 / 1000) # 8ms break between bytegroups
+            time.sleep(8 / 1000) # 8ms break between bytegroups
     return
 
 
@@ -123,9 +123,9 @@ def the_big_test():
     send_command(CMD_SEND_PRODUCT_1)
     time.sleep(1)
     print receive_response()
-    #for index in  range(0,len(products)):
-        #order_product(index)
-        #time.sleep(10)
+    for index in  range(0,len(products)):
+        order_product(index)
+        time.sleep(10)
     stop_machine()
 
 
@@ -138,7 +138,7 @@ CMD_READ_MACHINE_TYPE = b'RE:31'
 CMD_READ_INPUTS = b'IC:'
 CMD_GET_MACHINE_TYPE = b'TY:'
 CMD_READ_RAM = b'RR:'
-CMD_GET_PRODUCT = b'?P' #third char is product name 
+CMD_GET_PRODUCT = b'?PA' #third char is product name 
 CMD_SEND_PRODUCT_1 = b'FA:01'
 CMD_SMALL_CUP = b'FA:02'
 
