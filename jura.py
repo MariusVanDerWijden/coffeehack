@@ -163,7 +163,7 @@ except Exception as e:
     print e
     print "Cannot open serial port ('" + str(e) + "'). This script requires a raspberry pi serial port connected to a Jura coffee machine."
     sys.exit()
-
+print serialport.is_open
 send_command(CMD_GET_MACHINE_TYPE)
 r = receive_response()
 print r
