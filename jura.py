@@ -114,12 +114,12 @@ def order_product(index):
 
 
 def the_big_test():
-    start_machine()
+    #start_machine()
     send_command(CMD_GET_MACHINE_TYPE)
     print receive_response()
     for index in  range(0,len(products)):
         order_product(index)
-        time.sleep(1)
+        time.sleep(10)
     stop_machine()
 
 
