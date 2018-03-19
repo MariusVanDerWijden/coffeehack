@@ -44,18 +44,28 @@ def to_jura(c):
 
 # given an array of 4 bitarrays in jura encoding, return the decoded character byte
 def from_jura(bytes):
-    if len(bytes) != 4: raise ValueError('Needs an array of size 4')
+    if len(bytes) != 4:
+        print bytes
+        raise ValueError('Needs an array of size 4')
     c = bitarray(8)
-    print bytes
-    c[0] = bytes[0][2]
-    c[1] = bytes[0][5]
-    c[2] = bytes[1][2]
-    c[3] = bytes[1][5]
-    c[4] = bytes[2][2]
-    c[5] = bytes[2][5]
-    c[6] = bytes[3][2]
-    c[7] = bytes[3][5]
-
+    if type(bytes) is bytearray:
+        c[0] = '{0:08b}'.format(bytes[0])[2]
+        c[1] = '{0:08b}'.format(bytes[0])[5]
+        c[2] = '{0:08b}'.format(bytes[1])[2]
+        c[3] = '{0:08b}'.format(bytes[1])[5]
+        c[4] = '{0:08b}'.format(bytes[2])[2]
+        c[5] = '{0:08b}'.format(bytes[2])[5]
+        c[6] = '{0:08b}'.format(bytes[3])[2]
+        c[7] = '{0:08b}'.format(bytes[3])[5]
+    else:
+        c[0] = bytes[0][2]
+        c[1] = bytes[0][5]
+        c[2] = bytes[1][2]
+        c[3] = bytes[1][5]
+        c[4] = bytes[2][2]
+        c[5] = bytes[2][5]
+        c[6] = bytes[3][2]
+        c[7] = bytes[3][5]
     return c.tobytes()
 
 
@@ -72,13 +82,14 @@ def test_encoder():
 
 # encodes and writes a command without CRLF to the coffee machine
 def send_command(cmd):
-    print 'send_command' + cmd
-    cmd += "\r\n"
+    print 'send_command: ' + cmd
+    #cmd += "\r\n"
     for c in cmd:
         bytes = to_jura(c)
         for b in bytes:
             serialport.write(b.tobytes())
-            time.sleep(8 / 1000) # 8ms break between bytegroups
+            time.sleep(8/100);
+        time.sleep(1/10)
     return
 
 
@@ -86,11 +97,12 @@ def send_command(cmd):
 def receive_response():
     print 'receive response'
     response = bytearray()
-    bytes = bytearray(4)
+    tmp = bytearray(4)
+    time.sleep(1 /100)
     while serialport.in_waiting > 0:
-        serialport.readinto(bytes)
-    #response.append(from_jura(bytes))
-    print ''.join('{:02x}'.format(x) for x in bytes)
+        serialport.readinto(tmp)
+        time.sleep(1 /100)
+        response.append(from_jura(tmp))
     return response
 
 
@@ -114,18 +126,29 @@ def order_product(index):
 
 
 def the_big_test():
+    send_command(CMD_WRITE_SCREEN +"HI")
+    print receive_response()
+    time.sleep(3)
+    send_command("FA:06")
+    print receive_response()
+    time.sleep(3)
+    send_command(CMD_TEST_DISPLAY)
+    print receive_response()
+    time.sleep(10)
     start_machine()
+    time.sleep(3)
     send_command(CMD_GET_MACHINE_TYPE)
     print receive_response()
+    time.sleep(3)
     send_command(CMD_SMALL_CUP)
-    time.sleep(1)
+    time.sleep(5)
     print receive_response()
     send_command(CMD_SEND_PRODUCT_1)
-    time.sleep(1)
+    time.sleep(5)
     print receive_response()
-    for index in  range(0,len(products)):
-        order_product(index)
-        time.sleep(10)
+    #for index in  range(0,len(products)):
+    #    order_product(index)
+    #    time.sleep(1)
     stop_machine()
 
 
@@ -141,6 +164,7 @@ CMD_READ_RAM = b'RR:'
 CMD_GET_PRODUCT = b'?PA' #third char is product name 
 CMD_SEND_PRODUCT_1 = b'FA:01'
 CMD_SMALL_CUP = b'FA:02'
+CMD_WRITE_SCREEN = b'DA:'
 
 #if defined(S95)
 productsS95 = "EFABJIG";
@@ -159,10 +183,7 @@ print "----------------------"
 test_encoder()
 try:
     serialport = serial.Serial(port=SERIAL_PORT, baudrate = 9600,
-                parity=serial.PARITY_NONE,
-                stopbits=serial.STOPBITS_ONE,
-                bytesize=serial.EIGHTBITS,
-                timeout=0) #9600 8 N 1
+                timeout=500) #9600 8 N 1
     serialport.close()
     serialport.open()
 except Exception as e:
@@ -170,7 +191,7 @@ except Exception as e:
     print "Cannot open serial port ('" + str(e) + "'). This script requires a raspberry pi serial port connected to a Jura coffee machine."
     sys.exit()
 print serialport.is_open
-send_command(CMD_GET_MACHINE_TYPE)
+#send_command(CMD_GET_MACHINE_TYPE)
 r = receive_response()
 print r
 the_big_test()
